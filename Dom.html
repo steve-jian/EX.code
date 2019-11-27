@@ -1,19 +1,22 @@
 <html>
-  <head>
-    <title>count</title>
-  </head>
-  <body>
-    <h1>simple counter</h1>
-    <div class="container">
-        <button id="click" onClick="add()">click me</button>
-        <h1 id="time">0</h1>
-    </div>
-    <script>
-      let node = document.getElementById('time');
-      let time = parseInt(node.textContent)
-      let add = () =>{
-          node.textContent+=1
-      }
-    </script>
-  </body>
+
+<head>
+  <title>count</title>
+</head>
+
+<body>
+  <h1>simple counter</h1>
+  <div class="container">
+    <button id="click" onClick="add()">click me</button>
+    <h1 id="time">0</h1>
+  </div>
+  <script>
+    let node = document.getElementById('time');
+    let time = parseInt(node.textContent)
+    let add = () => {
+      node.textContent += 1
+    }
+  </script>
+</body>
+
 </html>
