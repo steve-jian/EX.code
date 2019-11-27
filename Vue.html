@@ -1,0 +1,21 @@
+<html>
+  <head>
+	<title>count</title>
+	<script src="https://unpkg.com/vue@2.2.6/dist/vue.js"></script>
+  </head>
+  <body>
+    <h1>simple counter</h1>
+    <div id="app">
+		<button id="click" @click="++count">click me</button>
+		<h1 id="time">{{ count }}</h1>
+	</div>
+	<script>
+		let app = new Vue({
+			el:'#app',
+			data:{
+				count: 0
+			},
+		})
+	</script>
+  </body>
+</html>
