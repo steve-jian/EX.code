@@ -25,7 +25,7 @@ export default {
   },
   computed: {
     test: function() {
-      if (/[A-Za-z]+/.test(this.str)) {
+      if (/[A-Za-z]/.test(this.str)) {
         return "green";
       } else return "red";
     }
