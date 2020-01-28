@@ -1,92 +1,82 @@
 <template>
-  <v-app dark>
-    <v-navigation-drawer
-      v-model="drawer"
-      :mini-variant="miniVariant"
-      :clipped="clipped"
-      fixed
-      app
-    >
-      <v-list>
-        <v-list-item
-          v-for="(item, i) in items"
-          :key="i"
-          :to="item.to"
-          router
-          exact
-        >
-          <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action>
+  <v-app>
+    <v-navigation-drawer v-model="draw" app>
+      <v-list-item>
+        <v-list-item-content>
+          <v-list-item-title class="title">
+            Application
+          </v-list-item-title>
+          <v-list-item-subtitle>
+            subtext
+          </v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>
+
+      <v-divider></v-divider>
+
+      <v-list dense nav>
+        <v-list-item v-for="item in items" :key="item.title" link>
           <v-list-item-content>
-            <v-list-item-title v-text="item.title" />
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar :clipped-left="clipped" fixed app>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-btn icon @click.stop="miniVariant = !miniVariant">
-        <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
-      </v-btn>
-      <v-btn icon @click.stop="clipped = !clipped">
-        <v-icon>mdi-application</v-icon>
-      </v-btn>
-      <v-btn icon @click.stop="fixed = !fixed">
-        <v-icon>mdi-minus</v-icon>
-      </v-btn>
-      <v-toolbar-title v-text="title" />
-      <v-spacer />
-      <v-btn icon @click.stop="rightDrawer = !rightDrawer">
-        <v-icon>mdi-menu</v-icon>
-      </v-btn>
+    <v-app-bar app>
+      <v-row class="px-8">
+        <v-toolbar-title class="mr-5 mx-2">
+          <nuxt-link to="/"> <img :src="logo" style="width:200px"/></nuxt-link>
+        </v-toolbar-title>
+        <v-toolbar-items v-show="$vuetify.breakpoint.mdAndUp">
+          <v-btn v-for="i in list" :key="i" text>{{ i }}</v-btn>
+        </v-toolbar-items>
+        <v-spacer />
+        <v-toolbar-items>
+          <v-app-bar-nav-icon
+            v-show="!$vuetify.breakpoint.mdAndUp"
+            @click="draw = !draw"
+          />
+        </v-toolbar-items>
+        <v-toolbar-items v-show="$vuetify.breakpoint.mdAndUp">
+          <v-btn class="mx-1" outlined color="info">登入</v-btn>
+          <v-btn class="mx-1" outlined color="info">註冊</v-btn>
+        </v-toolbar-items>
+      </v-row>
     </v-app-bar>
     <v-content>
-      <v-container>
-        <nuxt />
-      </v-container>
+      <nuxt />
     </v-content>
-    <v-navigation-drawer v-model="rightDrawer" :right="right" temporary fixed>
-      <v-list>
-        <v-list-item @click.native="right = !right">
-          <v-list-item-action>
-            <v-icon light>
-              mdi-repeat
-            </v-icon>
-          </v-list-item-action>
-          <v-list-item-title>Switch drawer (click me)</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-    <v-footer :fixed="fixed" app>
-      <span>&copy; 2019</span>
+
+    <v-footer app absolute>
+      <span>Yuntech Network Management. All rights reserved.</span>
+      <v-spacer v-show="$vuetify.breakpoint.mdAndUp" />
+      <span>&copy; {{ year }}</span>
     </v-footer>
   </v-app>
 </template>
 
 <script>
 export default {
+  name: 'Default',
   data() {
     return {
-      clipped: false,
-      drawer: false,
-      fixed: false,
+      list: ['流量', '規範', '公告', '關於'],
       items: [
-        {
-          icon: 'mdi-apps',
-          title: 'Welcome',
-          to: '/'
-        },
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire'
-        }
+        { title: 'Dashboard', icon: 'dashboard' },
+        { title: 'Account', icon: 'account_box' },
+        { title: 'Admin', icon: 'gavel' }
       ],
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
-      title: 'Vuetify.js'
+      draw: null
+    }
+  },
+  computed: {
+    logo() {
+      if (this.$vuetify.theme.dark)
+        return 'https://zh.nuxtjs.org/logos/built-with-nuxt-white.svg'
+      else return 'https://nuxtjs.org/logos/built-with-nuxt.svg'
+    },
+    year() {
+      return new Date().getFullYear()
     }
   }
 }
